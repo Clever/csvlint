@@ -34,7 +34,7 @@ else
 endif
 
 run:
-	@go run main.go
+	@go run cmd/csvlint/main.go
 
 build/$(EXECUTABLE)-v$(VERSION)-darwin-amd64:
 	GOARCH=amd64 GOOS=darwin go build -o "$@/$(EXECUTABLE)" $(PKG)/cmd/csvlint
