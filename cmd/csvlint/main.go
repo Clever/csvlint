@@ -64,5 +64,5 @@ func main() {
 		fmt.Println("\nunable to parse any further")
 		os.Exit(1)
 	}
-	os.Exit(0)
+	os.Exit(2)
 }

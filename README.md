@@ -54,3 +54,10 @@ Record #2 has error: wrong number of fields in line
 $ csvlint perfect.csv
 file is valid
 ```
+
+### Exit codes
+
+`csvlint` uses three different exit codes to mean different things:
+  * 0 - the file is valid
+  * 1 - couldn't parse the entire file
+  * 2 - could parse the file, but there were lint failures
