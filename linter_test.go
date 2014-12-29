@@ -15,6 +15,10 @@ var validationTable = []struct {
 	halted   bool
 }{
 	{file: "./test_data/perfect.csv", err: nil, invalids: []CSVError{}},
+	{file: "./test_data/perfect_tab.csv", err: nil, comma: '\t', invalids: []CSVError{}},
+	{file: "./test_data/perfect_pipe.csv", err: nil, comma: '|', invalids: []CSVError{}},
+	{file: "./test_data/perfect_colon.csv", err: nil, comma: ':', invalids: []CSVError{}},
+	{file: "./test_data/perfect_semicolon.csv", err: nil, comma: ';', invalids: []CSVError{}},
 	{file: "./test_data/one_long_column.csv", err: nil, invalids: []CSVError{{
 		Record: []string{"d", "e", "f", "g"},
 		err:    csv.ErrFieldCount,

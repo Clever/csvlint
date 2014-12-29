@@ -13,7 +13,7 @@ func printHelpAndExit(code int) {
 }
 
 func main() {
-	delimiter := flag.String("delimiter", "comma", "field delimiter in the file. options: comma, tab")
+	delimiter := flag.String("delimiter", "comma", "field delimiter in the file. options: comma, tab, pipe, colon, semicolon")
 	lazyquotes := flag.Bool("lazyquotes", false, "try to parse improperly escaped quotes")
 	help := flag.Bool("help", false, "print help and exit")
 	flag.Parse()
@@ -28,6 +28,12 @@ func main() {
 		comma = ','
 	case "tab":
 		comma = '\t'
+	case "pipe":
+		comma = '|'
+	case "colon":
+		comma = ':'
+	case "semicolon":
+		comma = ';'
 	default:
 		fmt.Printf("unrecognized delimiter '%s'\n\n", *delimiter)
 		printHelpAndExit(1)
