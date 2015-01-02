@@ -23,10 +23,12 @@ go get github.com/Clever/csvlint/cmd/csvlint
 
 ### Options
 
-  * delimiter: the field delimiter to default with
-    * default: comma
-    * valid options: comma, tab
-    * if you want anything else, you're probably doing CSVs wrong
+_*NOTE*: The default settings validate that a CSV conforms to [RFC 4180](https://tools.ietf.org/html/rfc4180). By changing the settings, you can no longer strictly guarantee a CSV conforms to RFC 4180._
+
+  * delimiter: the field delimiter, can be any single unicode character
+    * default: "," (comma)
+    * valid options: "\t", "|", "ஃ", etc
+    * if you want multi-character delimiters, you're probably doing CSVs wrong
   * lazyquotes: allow a quote to appear in an unquoted field and a non-doubled quote to appear in a quoted field. _WARNING: your file may pass linting, but not parse in the way you would expect_
 
 ### Examples
@@ -44,7 +46,7 @@ $ csvlint mult_long_columns.csv
 Record #2 has error: wrong number of fields in line
 Record #4 has error: wrong number of fields in line
 
-$ csvlint --delimiter=tab mult_long_columns_tabs.csv
+$ csvlint --delimiter='\t' mult_long_columns_tabs.csv
 Record #2 has error: wrong number of fields in line
 Record #4 has error: wrong number of fields in line
 

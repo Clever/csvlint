@@ -24,6 +24,10 @@ func main() {
 		printHelpAndExit(0)
 	}
 
+	if flag.NFlag() > 0 {
+		fmt.Fprintln(os.Stderr, "Warning: not using defaults, may not validate CSV to RFC 4180")
+	}
+
 	converted_delimiter, err := strconv.Unquote(`'` + *delimiter + `'`)
 	if err != nil {
 		fmt.Printf("error unquoting delimiter '%s', note that only one-character delimiters are supported\n\n", *delimiter)
