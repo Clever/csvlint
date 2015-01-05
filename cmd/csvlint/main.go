@@ -28,13 +28,13 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Warning: not using defaults, may not validate CSV to RFC 4180")
 	}
 
-	converted_delimiter, err := strconv.Unquote(`'` + *delimiter + `'`)
+	convertedDelimiter, err := strconv.Unquote(`'` + *delimiter + `'`)
 	if err != nil {
 		fmt.Printf("error unquoting delimiter '%s', note that only one-character delimiters are supported\n\n", *delimiter)
 		printHelpAndExit(1)
 	}
 	// don't need to check size since Unquote returns one-character string
-	comma, _ := utf8.DecodeRuneInString(converted_delimiter)
+	comma, _ := utf8.DecodeRuneInString(convertedDelimiter)
 
 	if len(flag.Args()) != 1 {
 		fmt.Println("csvlint accepts a single filepath as an argument\n")
