@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 PKG = github.com/Clever/csvlint
-PKGS = $(PKG)
+SUBPKGS = $(addprefix $(PKG)/, cmd/csvlint)
+PKGS = $(PKG) $(SUBPKGS)
 VERSION := $(shell cat VERSION)
 EXECUTABLE := csvlint
 BUILDS := \
@@ -19,10 +20,10 @@ test: $(PKGS)
 
 $(PKGS): golint
 	@go get -d -t $@
-	@gofmt -w=true $(GOPATH)/src/$@*/**.go
+	@gofmt -w=true $(GOPATH)/src/$@/*.go
 ifneq ($(NOLINT),1)
 	@echo "LINTING..."
-	@PATH=$(PATH):$(GOPATH)/bin golint $(GOPATH)/src/$@*/**.go
+	@PATH=$(PATH):$(GOPATH)/bin golint $(GOPATH)/src/$@/*.go
 	@echo ""
 endif
 ifeq ($(COVERAGE),1)
