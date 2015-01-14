@@ -26,10 +26,11 @@ ifneq ($(NOLINT),1)
 	@echo ""
 endif
 ifeq ($(COVERAGE),1)
+	@echo "TESTING WITH COVERAGE... $@"
 	@go test -cover -coverprofile=$(GOPATH)/src/$@/c.out $@ -test.v
 	@go tool cover -html=$(GOPATH)/src/$@/c.out
 else
-	@echo "TESTING..."
+	@echo "TESTING... $@"
 	@go test $@ -test.v
 endif
 

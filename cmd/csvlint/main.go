@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/Clever/csvlint"
 	"os"
+	"strconv"
+	"unicode/utf8"
 )
 
 func printHelpAndExit(code int) {
@@ -13,7 +15,7 @@ func printHelpAndExit(code int) {
 }
 
 func main() {
-	delimiter := flag.String("delimiter", "comma", "field delimiter in the file. options: comma, tab")
+	delimiter := flag.String("delimiter", ",", "field delimiter in the file, for instance '\\t' or '|'")
 	lazyquotes := flag.Bool("lazyquotes", false, "try to parse improperly escaped quotes")
 	help := flag.Bool("help", false, "print help and exit")
 	flag.Parse()
@@ -22,16 +24,17 @@ func main() {
 		printHelpAndExit(0)
 	}
 
-	var comma rune
-	switch *delimiter {
-	case "comma":
-		comma = ','
-	case "tab":
-		comma = '\t'
-	default:
-		fmt.Printf("unrecognized delimiter '%s'\n\n", *delimiter)
+	if flag.NFlag() > 0 {
+		fmt.Fprintln(os.Stderr, "Warning: not using defaults, may not validate CSV to RFC 4180")
+	}
+
+	convertedDelimiter, err := strconv.Unquote(`'` + *delimiter + `'`)
+	if err != nil {
+		fmt.Printf("error unquoting delimiter '%s', note that only one-character delimiters are supported\n\n", *delimiter)
 		printHelpAndExit(1)
 	}
+	// don't need to check size since Unquote returns one-character string
+	comma, _ := utf8.DecodeRuneInString(convertedDelimiter)
 
 	if len(flag.Args()) != 1 {
 		fmt.Println("csvlint accepts a single filepath as an argument\n")
