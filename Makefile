@@ -1,7 +1,7 @@
 SHELL := /bin/bash
-PKG = github.com/Clever/csvlint
-SUBPKGS = $(addprefix $(PKG)/, cmd/csvlint)
-PKGS = $(PKG) $(SUBPKGS)
+PKG := github.com/Clever/csvlint
+SUBPKGS := $(addprefix $(PKG)/, cmd/csvlint)
+PKGS := $(PKG) $(SUBPKGS)
 VERSION := $(shell cat VERSION)
 EXECUTABLE := csvlint
 BUILDS := \
@@ -11,19 +11,19 @@ BUILDS := \
 COMPRESSED_BUILDS := $(BUILDS:%=%.tar.gz)
 RELEASE_ARTIFACTS := $(COMPRESSED_BUILDS:build/%=release/%)
 
-.PHONY: test golint
-
-golint:
-	@go get github.com/golang/lint/golint
+.PHONY: clean run test $(PKGS)
 
 test: $(PKGS)
 
-$(PKGS): golint
+$(GOPATH)/bin/golint:
+	@go get github.com/golang/lint/golint
+
+$(PKGS): $(GOPATH)/bin/golint
 	@go get -d -t $@
 	@gofmt -w=true $(GOPATH)/src/$@/*.go
 ifneq ($(NOLINT),1)
 	@echo "LINTING..."
-	@PATH=$(PATH):$(GOPATH)/bin golint $(GOPATH)/src/$@/*.go
+	$(GOPATH)/bin/golint $(GOPATH)/src/$@/*.go
 	@echo ""
 endif
 ifeq ($(COVERAGE),1)
