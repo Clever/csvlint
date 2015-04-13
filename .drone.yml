@@ -1,24 +1,24 @@
 image: bradrydzewski/go:1.3
-script:
-  - make test
 notify:
   email:
     recipients:
-      - drone@clever.com
-  hipchat:
-    room: Clever-Dev-CI
-    token: {{hipchat_token}}
-    on_started: true
-    on_success: true
+    - drone@clever.com
+  slack:
     on_failure: true
+    on_started: false
+    on_success: false
+    webhook_url: $$slack_webhook
 publish:
   github:
-    branch: master
-    script:
-      - make release
     artifacts:
-      - release
-    tag: v$(cat VERSION)
-    token: {{github_token}}
-    user: Clever
+    - release
     repo: csvlint
+    script:
+    - make release
+    tag: v$(cat VERSION)
+    token: $$github_token
+    user: Clever
+    when:
+      branch: master
+script:
+- make test
