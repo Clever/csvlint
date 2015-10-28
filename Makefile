@@ -13,6 +13,13 @@ RELEASE_ARTIFACTS := $(COMPRESSED_BUILDS:build/%=release/%)
 
 .PHONY: clean run test $(PKGS)
 
+GOVERSION := $(shell go version | grep 1.5)
+ifeq "$(GOVERSION)" ""
+  $(error must be running Go version 1.5)
+endif
+
+export GO15VENDOREXPERIMENT = 1
+
 test: $(PKGS)
 
 $(GOPATH)/bin/golint:
