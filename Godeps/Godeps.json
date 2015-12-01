@@ -1,0 +1,14 @@
+{
+	"ImportPath": "github.com/Clever/csvlint",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"github.com/Clever/csvlint",
+		"github.com/Clever/csvlint/cmd/csvlint"
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Rev": "2eaa4b48b8954bf871229043b8064ca156a542a5"
+		}
+	]
+}
