@@ -1,3 +1,6 @@
+include golang.mk
+.DEFAULT_GOAL := test # override default goal set in library makefile
+
 SHELL := /bin/bash
 PKG := github.com/Clever/csvlint
 PKGS := $(shell go list ./... | grep -v /vendor)
@@ -12,39 +15,15 @@ RELEASE_ARTIFACTS := $(COMPRESSED_BUILDS:build/%=release/%)
 
 .PHONY: clean run test $(PKGS) vendor
 
-GOVERSION := $(shell go version | grep 1.5)
-ifeq "$(GOVERSION)" ""
-  $(error must be running Go version 1.5)
-endif
-
-export GO15VENDOREXPERIMENT = 1
-
-GOLINT := $(GOPATH)/bin/golint
-$(GOLINT):
-	go get github.com/golang/lint/golint
-
-GODEP := $(GOPATH)/bin/godep
-$(GODEP):
-	go get -u github.com/tools/godep
+$(eval $(call golang-version-check,1.5))
 
 test: $(PKGS)
 
-$(PKGS): $(GOLINT)
-	@go get -d -t $@
-	@gofmt -w=true $(GOPATH)/src/$@/*.go
-ifneq ($(NOLINT),1)
-	@echo "LINTING..."
-	$(GOLINT) $(GOPATH)/src/$@/*.go
-	@echo ""
-endif
-ifeq ($(COVERAGE),1)
-	@echo "TESTING WITH COVERAGE... $@"
-	@go test -cover -coverprofile=$(GOPATH)/src/$@/c.out $@ -test.v
-	@go tool cover -html=$(GOPATH)/src/$@/c.out
-else
-	@echo "TESTING... $@"
-	@go test $@ -test.v
-endif
+$(PKGS): golang-test-all-strict-deps
+	$(call golang-test-all-strict,$@)
+
+vendor: golang-godep-vendor-deps
+	$(call golang-godep-vendor,$(PKGS))
 
 run:
 	@go run cmd/csvlint/main.go
@@ -65,7 +44,3 @@ release: $(RELEASE_ARTIFACTS)
 
 clean:
 	rm -rf build release
-
-vendor: $(GODEP)
-	$(GODEP) save $(PKGS)
-	find vendor/ -path '*/vendor' -type d | xargs -IX rm -r X # remove any nested vendor directories

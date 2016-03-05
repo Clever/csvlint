@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/Clever/csvlint"
 	"os"
 	"strconv"
 	"unicode/utf8"
+
+	"github.com/Clever/csvlint"
 )
 
 func printHelpAndExit(code int) {
@@ -37,7 +38,7 @@ func main() {
 	comma, _ := utf8.DecodeRuneInString(convertedDelimiter)
 
 	if len(flag.Args()) != 1 {
-		fmt.Println("csvlint accepts a single filepath as an argument\n")
+		fmt.Print("csvlint accepts a single filepath as an argument\n\n")
 		printHelpAndExit(1)
 	}
 
