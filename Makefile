@@ -15,15 +15,13 @@ RELEASE_ARTIFACTS := $(COMPRESSED_BUILDS:build/%=release/%)
 
 .PHONY: clean run test $(PKGS) vendor
 
-$(eval $(call golang-version-check,1.8))
+$(eval $(call golang-version-check,1.9))
 
 test: $(PKGS)
 
 $(PKGS): golang-test-all-strict-deps
 	$(call golang-test-all-strict,$@)
 
-vendor: golang-godep-vendor-deps
-	$(call golang-godep-vendor,$(PKGS))
 
 run:
 	@go run cmd/csvlint/main.go
@@ -44,3 +42,7 @@ release: $(RELEASE_ARTIFACTS)
 
 clean:
 	rm -rf build release
+
+
+install_deps: golang-dep-vendor-deps
+	$(call golang-dep-vendor)
