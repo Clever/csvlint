@@ -70,7 +70,7 @@ var errTable = []struct {
 }{
 	{
 		err:     CSVError{Record: []string{"a", "b", "c"}, Num: 3, err: csv.ErrFieldCount},
-		message: "Record #3 has error: wrong number of fields in line",
+		message: "Record #3 has error: wrong number of fields",
 	},
 	{
 		err:     CSVError{Record: []string{"d", "e", "f"}, Num: 1, err: csv.ErrBareQuote},
