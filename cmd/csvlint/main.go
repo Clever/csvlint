@@ -18,6 +18,7 @@ func printHelpAndExit(code int) {
 func main() {
 	delimiter := flag.String("delimiter", ",", "field delimiter in the file, for instance '\\t' or '|'")
 	lazyquotes := flag.Bool("lazyquotes", false, "try to parse improperly escaped quotes")
+	verbose := flag.Bool("verbose", false, "verbose output")
 	help := flag.Bool("help", false, "print help and exit")
 	flag.Parse()
 
@@ -42,10 +43,10 @@ func main() {
 		printHelpAndExit(1)
 	}
 
-	f, err := os.Open(flag.Args()[0])
+	f, err := os.Open(flag.Arg(0))
 	if err != nil {
 		if os.IsNotExist(err) {
-			fmt.Printf("file '%s' does not exist\n", flag.Args()[0])
+			fmt.Printf("file '%s' does not exist\n", flag.Arg(0))
 			os.Exit(1)
 		} else {
 			panic(err)
@@ -58,11 +59,13 @@ func main() {
 		panic(err)
 	}
 	if len(invalids) == 0 {
-		fmt.Println("file is valid")
+		if *verbose {
+			fmt.Println("file is valid")
+		}
 		os.Exit(0)
 	}
 	for _, invalid := range invalids {
-		fmt.Println(invalid.Error())
+		fmt.Fprintf(os.Stderr, "%s:%d:%s\n", flag.Arg(0), invalid.Num, invalid.Error())
 	}
 	if halted {
 		fmt.Println("\nunable to parse any further")
