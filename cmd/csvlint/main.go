@@ -44,14 +44,17 @@ func main() {
 	}
 
 	var f *os.File
+	var fname string
 
 	if flag.NArg() == 0 {
+		fname = "stdin"
 		f = os.Stdin
 	} else {
-		f, err = os.Open(flag.Arg(0))
+		fname = flag.Arg(0)
+		f, err = os.Open(fname)
 		if err != nil {
 			if os.IsNotExist(err) {
-				fmt.Fprintf(os.Stderr, "file '%s' does not exist\n", flag.Arg(0))
+				fmt.Fprintf(os.Stderr, "file '%s' does not exist\n", fname)
 				os.Exit(1)
 			} else {
 				panic(err)
@@ -71,7 +74,7 @@ func main() {
 		os.Exit(0)
 	}
 	for _, invalid := range invalids {
-		fmt.Fprintf(os.Stderr, "%s:%d:%s\n", flag.Arg(0), invalid.Num, invalid.Error())
+		fmt.Fprintf(os.Stderr, "%s:%d:%s\n", fname, invalid.Num, invalid.Error())
 	}
 	if halted {
 		fmt.Println("\nunable to parse any further")
