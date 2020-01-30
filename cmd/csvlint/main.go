@@ -32,21 +32,21 @@ func main() {
 
 	convertedDelimiter, err := strconv.Unquote(`'` + *delimiter + `'`)
 	if err != nil {
-		fmt.Printf("error unquoting delimiter '%s', note that only one-character delimiters are supported\n\n", *delimiter)
+		fmt.Fprintf(os.Stderr, "error unquoting delimiter '%s', note that only one-character delimiters are supported\n", *delimiter)
 		printHelpAndExit(1)
 	}
 	// don't need to check size since Unquote returns one-character string
 	comma, _ := utf8.DecodeRuneInString(convertedDelimiter)
 
 	if len(flag.Args()) != 1 {
-		fmt.Print("csvlint accepts a single filepath as an argument\n\n")
+		fmt.Fprint(os.Stderr, "csvlint accepts a single filepath as an argument\n")
 		printHelpAndExit(1)
 	}
 
 	f, err := os.Open(flag.Arg(0))
 	if err != nil {
 		if os.IsNotExist(err) {
-			fmt.Printf("file '%s' does not exist\n", flag.Arg(0))
+			fmt.Fprintf(os.Stderr, "file '%s' does not exist\n", flag.Arg(0))
 			os.Exit(1)
 		} else {
 			panic(err)
