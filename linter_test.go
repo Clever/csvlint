@@ -2,9 +2,10 @@ package csvlint
 
 import (
 	"encoding/csv"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var validationTable = []struct {
@@ -57,7 +58,7 @@ func TestTable(t *testing.T) {
 		if test.comma == 0 {
 			comma = ','
 		}
-		invalids, halted, err := Validate(f, comma, false)
+		invalids, halted, err, _ := Validate(f, comma, false)
 		assert.Equal(t, test.err, err)
 		assert.Equal(t, halted, test.halted)
 		assert.Equal(t, test.invalids, invalids)
