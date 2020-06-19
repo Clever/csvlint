@@ -2,13 +2,26 @@
 
 
 [[projects]]
+  digest = "1:c78d2e2e3993a92a72be0aa49787e35b404b8e45e8d4efda0527c1bbc2e43931"
+  name = "github.com/Clever/csvlint"
+  packages = ["."]
+  pruneopts = ""
+  revision = "a4551ddf652b6596564455d618781ec01adf1f6f"
+  version = "0.2.0"
+
+[[projects]]
+  digest = "1:9d33f83a4552386a61d3c13203066637733be95e626d55450651127daae1334c"
   name = "github.com/stretchr/testify"
   packages = ["assert"]
+  pruneopts = ""
   revision = "2eaa4b48b8954bf871229043b8064ca156a542a5"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c940d1337f45f8152f2f5a9070e0260267261b8089ca6aeab1020e71dfb4253d"
+  input-imports = [
+    "github.com/Clever/csvlint",
+    "github.com/stretchr/testify/assert",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
