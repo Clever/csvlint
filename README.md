@@ -14,7 +14,7 @@ Standalone executables for multiple platforms are available via [Github Releases
 You can also compile from source:
 
 ```shell
-go install github.com/Clever/csvlint/cmd/csvlint
+go install github.com/Clever/csvlint/cmd/csvlint@latest
 ```
 
 ## Usage
