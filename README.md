@@ -9,7 +9,7 @@ For information about the library, see [godoc](http://godoc.org/github.com/Cleve
 
 ## Installing
 
-Standalone executables for multiple platforms are available via [Github Releases](https://github.com/Clever/csvlint/releases).
+Standalone executables for multiple platforms are available via [GitHub Releases](https://github.com/Clever/csvlint/releases).
 
 You can also compile from source:
 
