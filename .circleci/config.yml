@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /go/src/github.com/Clever/csvlint
+    working_directory: ~/go/src/github.com/Clever/csvlint
     docker:
     - image: cimg/go:1.21
     environment:
