@@ -15,7 +15,7 @@ RELEASE_ARTIFACTS := $(COMPRESSED_BUILDS:build/%=release/%)
 
 .PHONY: clean run test $(PKGS) vendor
 
-$(eval $(call golang-version-check,1.13))
+$(eval $(call golang-version-check,1.21))
 
 test: $(PKGS)
 
