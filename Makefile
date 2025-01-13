@@ -45,4 +45,5 @@ clean:
 
 
 install_deps:
+	go mod tidy
 	go mod vendor
