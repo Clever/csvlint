@@ -1,7 +1,7 @@
 # This is the default Clever Golang Makefile.
 # It is stored in the dev-handbook repo, github.com/Clever/dev-handbook
 # Please do not alter this file directly.
-GOLANG_MK_VERSION := 1.3.2
+GOLANG_MK_VERSION := 1.3.1
 
 SHELL := /bin/bash
 SYSTEM := $(shell uname -a | cut -d" " -f1 | tr '[:upper:]' '[:lower:]')
@@ -39,7 +39,7 @@ endef
 # so we're defended against it breaking or changing in the future.
 FGT := $(GOPATH)/bin/fgt
 $(FGT):
-	go get github.com/GeertJohan/fgt@262f7b11eec07dc7b147c44641236f3212fee89d
+	go install -mod=readonly github.com/GeertJohan/fgt@262f7b11eec07dc7b147c44641236f3212fee89d
 
 golang-ensure-curl-installed:
 	@command -v curl >/dev/null 2>&1 || { echo >&2 "curl not installed. Please install curl."; exit 1; }
@@ -51,7 +51,7 @@ golang-ensure-curl-installed:
 # Infra recommendation is to eventually move to https://github.com/golangci/golangci-lint so don't fail on linting error for now
 GOLINT := $(GOPATH)/bin/golint
 $(GOLINT):
-	go get golang.org/x/lint/golint@738671d3881b9731cc63024d5d88cf28db875626
+	go install -mod=readonly golang.org/x/lint/golint@738671d3881b9731cc63024d5d88cf28db875626
 
 # golang-fmt-deps requires the FGT tool for checking output
 golang-fmt-deps: $(FGT)
